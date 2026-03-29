@@ -5,6 +5,16 @@
 **Status**: Draft
 **Input**: User description: "Support for Overdue Todo Items - Users need a clear, visual way to identify which todos have not been completed by their due date"
 
+## Clarifications
+
+### Session 2026-03-28
+
+- Q: What text should the overdue indicator display? → A: Past Due
+- Q: Where should the "Past Due" indicator be positioned in the todo card? → A: Next to/after the due date display (grouped with date information)
+- Q: How should the "Past Due" indicator be styled? → A: Text label in danger color with bold font weight (balanced visibility)
+- Q: Which todo card elements should receive the enhanced danger color styling for overdue items (Priority 2)? → A: Apply danger color to both the "Past Due" indicator and the due date text
+- Q: How should the overdue status update when the current date changes (making previously non-overdue items overdue)? → A: Requires page refresh/reload (status updates only when page loads or data refreshes)
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Visual Overdue Indicator (Priority: P1)
@@ -17,7 +27,7 @@ As a todo application user, I want to see a clear visual indicator when a todo i
 
 **Acceptance Scenarios**:
 
-1. **Given** a todo item with a due date in the past and incomplete status, **When** I view the todo list, **Then** the overdue todo displays a clear text indicator (e.g., "Overdue" label or badge)
+1. **Given** a todo item with a due date in the past and incomplete status, **When** I view the todo list, **Then** the overdue todo displays a "Past Due" text label or badge positioned next to the due date
 
 2. **Given** a todo item with a due date in the past, **When** I mark it as complete, **Then** the overdue indicator is no longer displayed
 
@@ -39,7 +49,7 @@ As a todo application user, I want overdue todo items to be visually distinct th
 
 **Acceptance Scenarios**:
 
-1. **Given** a todo item with an overdue status, **When** I view the todo list, **Then** the todo displays with distinctive styling (e.g., red or danger color from design system)
+1. **Given** a todo item with an overdue status, **When** I view the todo list, **Then** the due date text displays in danger color (`#c62828` for light mode, `#ef5350` for dark mode) along with the "Past Due" indicator
 
 2. **Given** multiple overdue todos in the list, **When** I scan the list, **Then** all overdue items are visually consistent and easily distinguishable from non-overdue items
 
@@ -49,25 +59,26 @@ As a todo application user, I want overdue todo items to be visually distinct th
 
 ### Edge Cases
 
-- What happens when a todo's due date transitions from today to yesterday at midnight (becomes overdue)?
-- How does the system handle todos with due dates far in the past (e.g., months or years overdue)?
-- What happens when the system clock or timezone changes?
-- How are overdue todos displayed when the list contains many items (does styling remain consistent)?
+- What happens when a todo's due date transitions from today to yesterday at midnight (becomes overdue)? **Answer: The overdue status will update when the user refreshes the page or when the todo data is reloaded; no automatic real-time update occurs.**
+- How does the system handle todos with due dates far in the past (e.g., months or years overdue)? **Answer: All past-due incomplete todos display the same "Past Due" indicator regardless of how long ago the due date was.**
+- What happens when the system clock or timezone changes? **Answer: Overdue status is recalculated based on the browser's current date at page load/refresh.**
+- How are overdue todos displayed when the list contains many items (does styling remain consistent)? **Answer: Styling remains consistent for all overdue items regardless of list size.**
 
 ## Requirements *(mandatory)*
 
 ### Functional Requirements
 
 - **FR-001**: System MUST calculate whether a todo is overdue by comparing its due date against the current date (today)
-- **FR-002**: System MUST display an overdue indicator (text label or badge) for incomplete todos with due dates in the past
+- **FR-002**: System MUST display a "Past Due" text label for incomplete todos with due dates in the past, positioned next to or after the due date display, styled with danger color and bold font weight
 - **FR-003**: System MUST NOT display overdue indicators for completed todos, regardless of their due date
 - **FR-004**: System MUST NOT display overdue indicators for todos without a due date
 - **FR-005**: System MUST NOT consider today's date as overdue (only dates strictly before today are overdue)
-- **FR-006**: System MUST apply distinctive visual styling (color, font weight, or background) to overdue todo items
-- **FR-007**: Overdue styling MUST be consistent with the Halloween theme design system (use danger color: `#c62828` for light mode, `#ef5350` for dark mode)
+- **FR-006**: System MUST apply the danger color (`#c62828` for light mode, `#ef5350` for dark mode) to the "Past Due" text label
+- **FR-007**: System MUST apply danger color to the due date text for overdue items (Priority 2 enhancement - applies danger color to both the "Past Due" indicator and the due date itself)
 - **FR-008**: Overdue indicators MUST be visible in both light and dark modes with appropriate color adaptation
 - **FR-009**: System MUST recalculate overdue status when a todo's due date is updated
 - **FR-010**: System MUST recalculate overdue status when a todo's completion status changes
+- **FR-011**: System calculates overdue status based on the current date at page load or data refresh (no automatic real-time updates when the date changes)
 
 ### Key Entities
 
