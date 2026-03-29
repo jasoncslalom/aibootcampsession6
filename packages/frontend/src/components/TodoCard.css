@@ -1,0 +1,15 @@
+/**
+ * TodoCard CSS - Overdue indicator styling
+ * Styles for the "Past Due" label and overdue date text
+ */
+
+.overdue-indicator {
+  color: var(--danger-color);
+  font-weight: 700; /* bold */
+  font-size: 12px;
+  margin-left: var(--space-xs); /* 8px spacing */
+}
+
+.overdue-date {
+  color: var(--danger-color);
+}
